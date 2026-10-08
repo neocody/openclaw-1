@@ -11,8 +11,8 @@ vi.stubGlobal("navigator", { language: "en-US" });
 vi.stubGlobal(
   "window",
   Object.assign(new EventTarget(), {
-    setTimeout,
-    clearTimeout,
+    setTimeout: (callback: () => void, delay?: number) => setTimeout(callback, delay),
+    clearTimeout: (timer: ReturnType<typeof setTimeout>) => clearTimeout(timer),
   }),
 );
 beforeEach(() => values.clear());
