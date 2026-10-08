@@ -174,6 +174,7 @@ describe("inferBasePathFromPathname", () => {
 
 describe("TAB_GROUPS", () => {
   it("contains all expected groups", () => {
+    // TAB_GROUPS uses lowercase translation keys, not rendered display labels.
     const labels = TAB_GROUPS.map((g) => g.label);
     expect(labels).toContain("chat");
     expect(labels).toContain("control");

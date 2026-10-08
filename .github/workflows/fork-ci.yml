@@ -1,5 +1,9 @@
 name: Fork validation
 
+# Validate owned branches in neocody/openclaw-1. Inherited Blacksmith and
+# privileged jobs are restricted to openclaw/openclaw in their own workflows.
+# External contributor PRs are outside this fork's approved CI lane.
+
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
