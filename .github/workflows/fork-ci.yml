@@ -1,0 +1,120 @@
+name: Fork validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fork-ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  linux:
+    if: github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [check, tests, e2e, protocol, bun, ui]
+    env:
+      OPENCLAW_TEST_PROFILE: low
+      OPENCLAW_TEST_WORKERS: 2
+      OPENCLAW_TEST_SERIAL_GATEWAY: 1
+      OPENCLAW_TEST_INCLUDE_GATEWAY: 1
+      OPENCLAW_TEST_INCLUDE_EXTENSIONS: 1
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          submodules: recursive
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.23.3
+      - name: Install locked dependencies
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.23.0 --activate
+          pnpm install --frozen-lockfile --ignore-scripts=false
+      - name: Check, build, and smoke
+        if: matrix.task == 'check'
+        run: |
+          pnpm check
+          pnpm build
+          pnpm build:strict-smoke
+          pnpm ui:build
+          node openclaw.mjs --help
+          python3 scripts/check-composite-action-input-interpolation.py
+      - name: All offline Node suites
+        if: matrix.task == 'tests'
+        run: pnpm canvas:a2ui:bundle && pnpm test
+      - name: Offline end-to-end tests
+        if: matrix.task == 'e2e'
+        run: pnpm canvas:a2ui:bundle && pnpm test:e2e
+      - name: Protocol generation
+        if: matrix.task == 'protocol'
+        run: pnpm protocol:check
+      - name: Browser UI tests
+        if: matrix.task == 'ui'
+        run: |
+          pnpm --dir ui exec playwright install --with-deps chromium
+          pnpm test:ui
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        if: matrix.task == 'bun'
+        with:
+          bun-version: 1.3.9
+      - name: Bun compatibility tests
+        if: matrix.task == 'bun'
+        run: pnpm canvas:a2ui:bundle && bunx --no-install vitest run --config vitest.unit.config.ts
+
+  python:
+    if: github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Python skill validation
+        run: |
+          python3 -m venv /tmp/skill-check
+          /tmp/skill-check/bin/pip install pytest ruff pyyaml
+          /tmp/skill-check/bin/ruff check skills
+          /tmp/skill-check/bin/pytest -q skills
+
+  macos:
+    if: github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Swift lint, build, and tests
+        run: |
+          brew install swiftlint swiftformat
+          swiftlint --config .swiftlint.yml
+          swiftformat --lint apps/macos/Sources --config .swiftformat
+          swift build --package-path apps/macos --configuration release
+          swift test --package-path apps/macos --parallel
+
+  android:
+    if: github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Android build and unit tests
+        working-directory: apps/android
+        run: |
+          export JAVA_HOME="$JAVA_HOME_17_X64"
+          export PATH="$JAVA_HOME/bin:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+          sdkmanager --install 'platforms;android-36' 'build-tools;36.0.0'
+          ./gradlew --no-daemon :app:testDebugUnitTest :app:assembleDebug

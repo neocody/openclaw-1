@@ -293,12 +293,12 @@ function matchesSearch(params: {
   const meta = SECTION_META[params.key];
 
   // Check key name
-  if (q && params.key.toLowerCase().includes(q)) {
+  if (q && criteria.tags.length === 0 && params.key.toLowerCase().includes(q)) {
     return true;
   }
 
   // Check label and description
-  if (q && meta) {
+  if (q && criteria.tags.length === 0 && meta) {
     if (meta.label.toLowerCase().includes(q)) {
       return true;
     }

@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   docs-scope:
+    if: github.repository == 'openclaw/openclaw'
     runs-on: blacksmith-16vcpu-ubuntu-2404
     outputs:
       docs_only: ${{ steps.check.outputs.docs_only }}
@@ -27,7 +28,7 @@ jobs:
 
   install-smoke:
     needs: [docs-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true'
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true') }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout CLI
