@@ -59,7 +59,7 @@ jobs:
         run: pnpm canvas:a2ui:bundle && pnpm test
       - name: Offline end-to-end tests
         if: matrix.task == 'e2e'
-        run: pnpm canvas:a2ui:bundle && pnpm test:e2e
+        run: pnpm build && pnpm test:e2e
       - name: Protocol generation
         if: matrix.task == 'protocol'
         run: pnpm protocol:check
