@@ -25,6 +25,7 @@ struct ExecCommandResolution: Sendable {
         cwd: String?,
         env: [String: String]?) -> [ExecCommandResolution]
     {
+        guard !ExecEnvInvocationUnwrapper.usesModifiers(command) else { return [] }
         let shell = ExecShellWrapperParser.extract(command: command, rawCommand: rawCommand)
         if shell.isWrapper {
             guard let shellCommand = shell.command,

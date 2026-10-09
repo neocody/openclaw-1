@@ -64,7 +64,7 @@ enum OverlayPanelFactory {
     @MainActor
     static func present(
         window: NSWindow?,
-        isVisible: inout Bool,
+        isVisible: Bool,
         target: NSRect,
         startOffsetY: CGFloat = -6,
         onFirstPresent: (() -> Void)? = nil,
@@ -72,7 +72,6 @@ enum OverlayPanelFactory {
     {
         guard let window else { return }
         if !isVisible {
-            isVisible = true
             onFirstPresent?()
             let start = target.offsetBy(dx: 0, dy: startOffsetY)
             self.animatePresent(window: window, from: start, to: target)

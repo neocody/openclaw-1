@@ -134,7 +134,8 @@ jobs:
           swiftlint --config .swiftlint.yml
           "$RUNNER_TEMP/swiftformat-0.63.0/swiftformat" --lint apps/macos/Sources --config .swiftformat
           swift build --package-path apps/macos --configuration release --force-resolved-versions
-          swift test --package-path apps/macos --parallel --force-resolved-versions
+          # AppKit tests share process-wide window/audio state; keep every test.
+          swift test --package-path apps/macos --no-parallel --force-resolved-versions
 
   android:
     if: github.repository == 'neocody/openclaw-1' && (github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository))
