@@ -21,7 +21,7 @@ let package = Package(
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.8.1"),
         .package(
             url: "https://github.com/steipete/Peekaboo.git",
-            revision: "b414c71bb675b7b25d536e6ed42ebda6147246af"),
+            revision: "8659b70d386d02f831e277386b3216023ccc707e"),
         .package(path: "../shared/OpenClawKit"),
         .package(path: "../../Swabble"),
     ],

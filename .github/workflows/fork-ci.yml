@@ -3,6 +3,9 @@ name: Fork validation
 # Validate owned branches in neocody/openclaw-1. Inherited Blacksmith and
 # privileged jobs are restricted to openclaw/openclaw in their own workflows.
 # External contributor PRs are outside this fork's approved CI lane.
+# The inherited Labeler was disabled in this fork with owner approval on
+# 2026-10-08: it needs upstream credentials/runners and only applies labels.
+# Keep all nine validation jobs below active; preserve historical Labeler runs.
 
 on:
   pull_request:
