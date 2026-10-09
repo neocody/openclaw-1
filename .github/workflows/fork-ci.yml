@@ -127,10 +127,11 @@ jobs:
       - name: Swift lint, build, and tests
         run: |
           brew install swiftlint
+          swift --version
           swiftlint --config .swiftlint.yml
           "$RUNNER_TEMP/swiftformat-0.63.0/swiftformat" --lint apps/macos/Sources --config .swiftformat
-          swift build --package-path apps/macos --configuration release
-          swift test --package-path apps/macos --parallel
+          swift build --package-path apps/macos --configuration release --force-resolved-versions
+          swift test --package-path apps/macos --parallel --force-resolved-versions
 
   android:
     if: github.repository == 'neocody/openclaw-1' && (github.event_name != 'pull_request' || (!github.event.pull_request.draft && github.event.pull_request.head.repo.full_name == github.repository))
