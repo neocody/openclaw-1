@@ -84,6 +84,8 @@ enum ExecEnvInvocationUnwrapper {
             guard ExecCommandToken.basenameLower(token) == "env" else {
                 break
             }
+            // Environment modifiers change execution semantics and require approval.
+            guard !self.usesModifiers(current) else { break }
             guard let unwrapped = self.unwrap(current), !unwrapped.isEmpty else {
                 break
             }
@@ -91,5 +93,24 @@ enum ExecEnvInvocationUnwrapper {
             depth += 1
         }
         return current
+    }
+
+    static func usesModifiers(_ command: [String]) -> Bool {
+        var current = command
+        for _ in 0..<self.maxWrapperDepth {
+            guard let token = current.first, ExecCommandToken.basenameLower(token) == "env" else {
+                return false
+            }
+            guard let unwrapped = self.unwrap(current) else { return true }
+            let prefix = current.dropFirst().prefix(current.count - unwrapped.count - 1)
+            if prefix.contains(where: {
+                let token = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                return !token.isEmpty && token != "--" && token != "-"
+            }) {
+                return true
+            }
+            current = unwrapped
+        }
+        return current.first.map { ExecCommandToken.basenameLower($0) == "env" } ?? false
     }
 }

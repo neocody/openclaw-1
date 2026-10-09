@@ -32,8 +32,9 @@ final class TalkOverlayController {
         let target = self.targetFrame()
         OverlayPanelFactory.present(
             window: self.window,
-            isVisible: &self.model.isVisible,
-            target: target)
+            isVisible: self.model.isVisible,
+            target: target,
+            onFirstPresent: { self.model.isVisible = true })
         { window in
             window.setFrame(target, display: true)
             window.orderFrontRegardless()
@@ -83,7 +84,9 @@ final class TalkOverlayController {
     // MARK: - Private
 
     private func ensureWindow() {
-        if self.window != nil { return }
+        if self.window != nil {
+            return
+        }
         let panel = OverlayPanelFactory.makePanel(
             contentRect: NSRect(x: 0, y: 0, width: Self.overlaySize, height: Self.overlaySize),
             level: NSWindow.Level(rawValue: NSWindow.Level.popUpMenu.rawValue - 4),

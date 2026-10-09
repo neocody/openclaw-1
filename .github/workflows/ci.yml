@@ -13,6 +13,7 @@ jobs:
   # Detect docs-only changes to skip heavy jobs (test, build, Windows, macOS, Android).
   # Lint and format always run. Fail-safe: if detection fails, run everything.
   docs-scope:
+    if: github.repository == 'openclaw/openclaw'
     runs-on: blacksmith-16vcpu-ubuntu-2404
     outputs:
       docs_only: ${{ steps.check.outputs.docs_only }}
@@ -32,7 +33,7 @@ jobs:
   # Push to main keeps broad coverage.
   changed-scope:
     needs: [docs-scope]
-    if: github.event_name == 'pull_request' && needs.docs-scope.outputs.docs_only != 'true'
+    if: ${{ github.repository == 'openclaw/openclaw' && (github.event_name == 'pull_request' && needs.docs-scope.outputs.docs_only != 'true') }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     outputs:
       run_node: ${{ steps.scope.outputs.run_node }}
@@ -63,7 +64,7 @@ jobs:
   # Build dist once for Node-relevant changes and share it with downstream jobs.
   build-artifacts:
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -90,7 +91,7 @@ jobs:
   # Validate npm pack contents after build (only on push to main, not PRs).
   release-check:
     needs: [docs-scope, build-artifacts]
-    if: github.event_name == 'push' && needs.docs-scope.outputs.docs_only != 'true'
+    if: ${{ github.repository == 'openclaw/openclaw' && (github.event_name == 'push' && needs.docs-scope.outputs.docs_only != 'true') }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -115,7 +116,7 @@ jobs:
 
   checks:
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     strategy:
       fail-fast: false
@@ -164,7 +165,7 @@ jobs:
   check:
     name: "check"
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -194,7 +195,7 @@ jobs:
     name: dead-code report
     needs: [docs-scope, changed-scope]
     # if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')
-    if: false
+    if: ${{ github.repository == 'openclaw/openclaw' && (false) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     strategy:
       fail-fast: false
@@ -230,7 +231,7 @@ jobs:
   # Validate docs (format, lint, broken links) only when docs files changed.
   check-docs:
     needs: [docs-scope]
-    if: needs.docs-scope.outputs.docs_changed == 'true'
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_changed == 'true') }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -249,7 +250,7 @@ jobs:
 
   skills-python:
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_node == 'true')) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -274,6 +275,7 @@ jobs:
         run: python -m pytest -q skills
 
   secrets:
+    if: github.repository == 'openclaw/openclaw'
     runs-on: blacksmith-16vcpu-ubuntu-2404
     steps:
       - name: Checkout
@@ -331,7 +333,7 @@ jobs:
 
   checks-windows:
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_windows == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_windows == 'true')) }}
     runs-on: blacksmith-32vcpu-windows-2025
     timeout-minutes: 45
     env:
@@ -456,7 +458,7 @@ jobs:
   # per PR allows 5 PRs to run macOS checks simultaneously.
   macos:
     needs: [docs-scope, changed-scope, check]
-    if: github.event_name == 'pull_request' && needs.docs-scope.outputs.docs_only != 'true' && needs.changed-scope.outputs.run_macos == 'true'
+    if: ${{ github.repository == 'openclaw/openclaw' && (github.event_name == 'pull_request' && needs.docs-scope.outputs.docs_only != 'true' && needs.changed-scope.outputs.run_macos == 'true') }}
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -528,7 +530,7 @@ jobs:
           exit 1
 
   ios:
-    if: false # ignore iOS in CI for now
+    if: ${{ github.repository == 'openclaw/openclaw' && (false) }}
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -689,7 +691,7 @@ jobs:
 
   android:
     needs: [docs-scope, changed-scope]
-    if: needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_android == 'true')
+    if: ${{ github.repository == 'openclaw/openclaw' && (needs.docs-scope.outputs.docs_only != 'true' && (github.event_name == 'push' || needs.changed-scope.outputs.run_android == 'true')) }}
     runs-on: blacksmith-16vcpu-ubuntu-2404
     strategy:
       fail-fast: false

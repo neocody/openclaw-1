@@ -15,9 +15,10 @@ extension VoiceWakeOverlayController {
         let target = self.targetFrame()
         OverlayPanelFactory.present(
             window: self.window,
-            isVisible: &self.model.isVisible,
+            isVisible: self.model.isVisible,
             target: target,
             onFirstPresent: {
+                self.model.isVisible = true
                 self.logger.log(
                     level: .info,
                     "overlay present windowShown textLen=\(self.model.text.count, privacy: .public)")
@@ -31,7 +32,9 @@ extension VoiceWakeOverlayController {
     }
 
     private func ensureWindow() {
-        if self.window != nil { return }
+        if self.window != nil {
+            return
+        }
         let borderPad = self.closeOverflow
         let panel = OverlayPanelFactory.makePanel(
             contentRect: NSRect(x: 0, y: 0, width: self.width + borderPad * 2, height: 60 + borderPad * 2),

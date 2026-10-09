@@ -63,8 +63,9 @@ final class NotifyOverlayController {
         let target = self.targetFrame()
         OverlayPanelFactory.present(
             window: self.window,
-            isVisible: &self.model.isVisible,
-            target: target)
+            isVisible: self.model.isVisible,
+            target: target,
+            onFirstPresent: { self.model.isVisible = true })
         { window in
             self.updateWindowFrame(animate: true)
             window.orderFrontRegardless()
@@ -72,7 +73,9 @@ final class NotifyOverlayController {
     }
 
     private func ensureWindow() {
-        if self.window != nil { return }
+        if self.window != nil {
+            return
+        }
         let panel = OverlayPanelFactory.makePanel(
             contentRect: NSRect(x: 0, y: 0, width: self.width, height: self.minHeight),
             level: .statusBar,

@@ -29,7 +29,9 @@ final class CanvasA2UIActionMessageHandler: NSObject, WKScriptMessageHandler {
         }
 
         let body: [String: Any] = {
-            if let dict = message.body as? [String: Any] { return dict }
+            if let dict = message.body as? [String: Any] {
+                return dict
+            }
             if let dict = message.body as? [AnyHashable: Any] {
                 return dict.reduce(into: [String: Any]()) { acc, pair in
                     guard let key = pair.key as? String else { return }
@@ -42,7 +44,9 @@ final class CanvasA2UIActionMessageHandler: NSObject, WKScriptMessageHandler {
 
         let userActionAny = body["userAction"] ?? body
         let userAction: [String: Any] = {
-            if let dict = userActionAny as? [String: Any] { return dict }
+            if let dict = userActionAny as? [String: Any] {
+                return dict
+            }
             if let dict = userActionAny as? [AnyHashable: Any] {
                 return dict.reduce(into: [String: Any]()) { acc, pair in
                     guard let key = pair.key as? String else { return }

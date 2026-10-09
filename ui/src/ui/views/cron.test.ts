@@ -193,7 +193,7 @@ describe("cron view", () => {
     );
   });
 
-  it("shows selected job name and sorts run history newest first", () => {
+  it.each(["asc", "desc"] as const)("sorts run history in the selected %s direction", (dir) => {
     const container = document.createElement("div");
     const job = createJob("job-1");
     render(
@@ -202,6 +202,7 @@ describe("cron view", () => {
           jobs: [job],
           runsJobId: "job-1",
           runsScope: "job",
+          runsSortDir: dir,
           runs: [
             { ts: 1, jobId: "job-1", status: "ok", summary: "older run" },
             { ts: 2, jobId: "job-1", status: "ok", summary: "newer run" },
@@ -222,8 +223,9 @@ describe("cron view", () => {
     const summaries = Array.from(
       runHistoryCard?.querySelectorAll(".list-item .list-sub") ?? [],
     ).map((el) => (el.textContent ?? "").trim());
-    expect(summaries[0]).toBe("newer run");
-    expect(summaries[1]).toBe("older run");
+    expect(summaries).toEqual(
+      dir === "asc" ? ["older run", "newer run"] : ["newer run", "older run"],
+    );
   });
 
   it("labels past nextRunAtMs as due instead of next", () => {

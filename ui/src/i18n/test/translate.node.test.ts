@@ -46,11 +46,7 @@ describe("i18n", () => {
     vi.resetModules();
     const fresh = await import("../lib/translate.ts");
 
-    for (let index = 0; index < 5 && fresh.i18n.getLocale() !== "zh-CN"; index += 1) {
-      await Promise.resolve();
-    }
-
-    expect(fresh.i18n.getLocale()).toBe("zh-CN");
+    await vi.waitFor(() => expect(fresh.i18n.getLocale()).toBe("zh-CN"));
     expect(fresh.t("common.health")).toBe("健康状况");
   });
 });
