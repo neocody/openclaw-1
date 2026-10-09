@@ -31,7 +31,9 @@ extension VoiceWakeOverlayController {
     }
 
     private func ensureWindow() {
-        if self.window != nil { return }
+        if self.window != nil {
+            return
+        }
         let borderPad = self.closeOverflow
         let panel = OverlayPanelFactory.makePanel(
             contentRect: NSRect(x: 0, y: 0, width: self.width + borderPad * 2, height: 60 + borderPad * 2),

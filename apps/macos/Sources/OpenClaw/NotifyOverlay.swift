@@ -72,7 +72,9 @@ final class NotifyOverlayController {
     }
 
     private func ensureWindow() {
-        if self.window != nil { return }
+        if self.window != nil {
+            return
+        }
         let panel = OverlayPanelFactory.makePanel(
             contentRect: NSRect(x: 0, y: 0, width: self.width, height: self.minHeight),
             level: .statusBar,

@@ -118,11 +118,17 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+      - name: Install the pinned Swift formatter
+        run: |
+          curl -sSfL 'https://github.com/nicklockwood/SwiftFormat/releases/download/0.63.0/swiftformat.zip' -o "$RUNNER_TEMP/swiftformat.zip"
+          echo '28c7802e11fa5ae113d903066439c6bb1be20a8ac1ad9709c42616a7e273fb0f  '"$RUNNER_TEMP/swiftformat.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/swiftformat.zip" -d "$RUNNER_TEMP/swiftformat-0.63.0"
+          "$RUNNER_TEMP/swiftformat-0.63.0/swiftformat" --version
       - name: Swift lint, build, and tests
         run: |
-          brew install swiftlint swiftformat
+          brew install swiftlint
           swiftlint --config .swiftlint.yml
-          swiftformat --lint apps/macos/Sources --config .swiftformat
+          "$RUNNER_TEMP/swiftformat-0.63.0/swiftformat" --lint apps/macos/Sources --config .swiftformat
           swift build --package-path apps/macos --configuration release
           swift test --package-path apps/macos --parallel
 
