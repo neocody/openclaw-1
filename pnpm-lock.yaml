@@ -186,7 +186,7 @@ importers:
         version: 4.10.2
       undici:
         specifier: ^7.22.0
-        version: 7.22.0
+        version: 7.30.1
       ws:
         specifier: ^8.19.0
         version: 8.19.0
@@ -511,8 +511,8 @@ importers:
   extensions/zalo:
     dependencies:
       undici:
-        specifier: 7.22.0
-        version: 7.22.0
+        specifier: 7.30.1
+        version: 7.30.1
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -6272,6 +6272,10 @@ packages:
     resolution: {integrity: sha512-RqslV2Us5BrllB+JeiZnK4peryVTndy9Dnqq62S3yYRRTj0tFQCwEniUy2167skdGOy3vqRzEvl1Dm4sV2ReDg==}
     engines: {node: '>=20.18.1'}
 
+  undici@7.30.1:
+    resolution: {integrity: sha512-03KrMbjIFDWQR5RNPrSw3bd1r12JpyFQl9/yxjUbJtqkjmllqC5lFjZh6ujeuJCKr8EOQvRW872Oy/az+nLYxg==}
+    engines: {node: '>=20.18.1'}
+
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
@@ -7962,7 +7966,7 @@ snapshots:
       openai: 6.10.0(ws@8.19.0)(zod@4.3.6)
       partial-json: 0.1.7
       proxy-agent: 6.5.0
-      undici: 7.22.0
+      undici: 7.30.1
       zod-to-json-schema: 3.25.1(zod@4.3.6)
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
@@ -13099,6 +13103,8 @@ snapshots:
     optional: true
 
   undici@7.22.0: {}
+
+  undici@7.30.1: {}
 
   unist-util-is@6.0.1:
     dependencies:
