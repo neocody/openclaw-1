@@ -24,7 +24,7 @@ importers:
     dependencies:
       '@agentclientprotocol/sdk':
         specifier: 0.14.1
-        version: 0.14.1(zod@4.3.6)
+        version: 0.14.1(zod@4.6.6)
       '@aws-sdk/client-bedrock':
         specifier: ^3.1000.0
         version: 3.1000.0
@@ -54,13 +54,13 @@ importers:
         version: 1.2.0-beta.3
       '@mariozechner/pi-agent-core':
         specifier: 0.55.3
-        version: 0.55.3(ws@8.19.0)(zod@4.3.6)
+        version: 0.55.3(ws@8.19.0)(zod@4.6.6)
       '@mariozechner/pi-ai':
         specifier: 0.55.3
-        version: 0.55.3(ws@8.19.0)(zod@4.3.6)
+        version: 0.55.3(ws@8.19.0)(zod@4.6.6)
       '@mariozechner/pi-coding-agent':
         specifier: 0.55.3
-        version: 0.55.3(ws@8.19.0)(zod@4.3.6)
+        version: 0.55.3(ws@8.19.0)(zod@4.6.6)
       '@mariozechner/pi-tui':
         specifier: 0.55.3
         version: 0.55.3
@@ -195,7 +195,7 @@ importers:
         version: 2.8.2
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
     devDependencies:
       '@grammyjs/types':
         specifier: ^3.25.0
@@ -265,7 +265,7 @@ importers:
     dependencies:
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/copilot-proxy: {}
 
@@ -332,7 +332,7 @@ importers:
         version: 7.0.6
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/google-gemini-cli-auth: {}
 
@@ -351,7 +351,7 @@ importers:
     dependencies:
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/line: {}
 
@@ -374,7 +374,7 @@ importers:
     dependencies:
       '@mariozechner/pi-agent-core':
         specifier: 0.55.3
-        version: 0.55.3(ws@8.19.0)(zod@4.3.6)
+        version: 0.55.3(ws@8.19.0)(zod@4.6.6)
       '@matrix-org/matrix-sdk-crypto-nodejs':
         specifier: ^0.4.0
         version: 0.4.0
@@ -389,7 +389,7 @@ importers:
         version: 11.16.0
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/mattermost:
     dependencies:
@@ -398,7 +398,7 @@ importers:
         version: 8.19.0
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/memory-core:
     dependencies:
@@ -433,7 +433,7 @@ importers:
     dependencies:
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/nostr:
     dependencies:
@@ -442,7 +442,7 @@ importers:
         version: 2.23.3(typescript@5.9.3)
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/open-prose: {}
 
@@ -454,7 +454,7 @@ importers:
     dependencies:
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/telegram: {}
 
@@ -474,7 +474,7 @@ importers:
         version: 3.0.0
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/twitch:
     dependencies:
@@ -489,7 +489,7 @@ importers:
         version: 8.0.3(@twurple/auth@8.0.3)
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/voice-call:
     dependencies:
@@ -504,7 +504,7 @@ importers:
         version: 8.19.0
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/whatsapp: {}
 
@@ -515,7 +515,7 @@ importers:
         version: 7.22.0
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   extensions/zalouser:
     dependencies:
@@ -527,7 +527,7 @@ importers:
         version: 2.1.1
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.6.6
 
   packages/clawdbot:
     dependencies:
@@ -6557,6 +6557,9 @@ packages:
   zod@4.3.6:
     resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
+  zod@4.6.6:
+    resolution: {integrity: sha512-4UmzQUF5fxvfcYHlbjBmejU+w+hbDnWFx4aS8kBx7nPBHcO2SqPbpAG8snbdg+Xse4pRefR98hgjFgIMCI/UhA==}
+
   zod@4.6.7:
     resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
@@ -6569,6 +6572,10 @@ snapshots:
     dependencies:
       zod: 4.3.6
 
+  '@agentclientprotocol/sdk@0.14.1(zod@4.6.6)':
+    dependencies:
+      zod: 4.6.6
+
   '@agentclientprotocol/sdk@0.14.1(zod@4.6.7)':
     dependencies:
       zod: 4.6.7
@@ -6578,6 +6585,12 @@ snapshots:
       json-schema-to-ts: 3.1.1
     optionalDependencies:
       zod: 4.3.6
+
+  '@anthropic-ai/sdk@0.73.0(zod@4.6.6)':
+    dependencies:
+      json-schema-to-ts: 3.1.1
+    optionalDependencies:
+      zod: 4.6.6
 
   '@aws-crypto/crc32@5.2.0':
     dependencies:
@@ -7949,6 +7962,18 @@ snapshots:
       - ws
       - zod
 
+  '@mariozechner/pi-agent-core@0.55.3(ws@8.19.0)(zod@4.6.6)':
+    dependencies:
+      '@mariozechner/pi-ai': 0.55.3(ws@8.19.0)(zod@4.6.6)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - aws-crt
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+      - ws
+      - zod
+
   '@mariozechner/pi-ai@0.55.3(ws@8.19.0)(zod@4.3.6)':
     dependencies:
       '@anthropic-ai/sdk': 0.73.0(zod@4.3.6)
@@ -7973,11 +7998,65 @@ snapshots:
       - ws
       - zod
 
+  '@mariozechner/pi-ai@0.55.3(ws@8.19.0)(zod@4.6.6)':
+    dependencies:
+      '@anthropic-ai/sdk': 0.73.0(zod@4.6.6)
+      '@aws-sdk/client-bedrock-runtime': 3.1000.0
+      '@google/genai': 1.43.0
+      '@mistralai/mistralai': 1.10.0
+      '@sinclair/typebox': 0.34.48
+      ajv: 8.18.0
+      ajv-formats: 3.0.1(ajv@8.18.0)
+      chalk: 5.6.2
+      openai: 6.10.0(ws@8.19.0)(zod@4.6.6)
+      partial-json: 0.1.7
+      proxy-agent: 6.5.0
+      undici: 7.22.0
+      zod-to-json-schema: 3.25.1(zod@4.6.6)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - aws-crt
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+      - ws
+      - zod
+
   '@mariozechner/pi-coding-agent@0.55.3(ws@8.19.0)(zod@4.3.6)':
     dependencies:
       '@mariozechner/jiti': 2.6.5
       '@mariozechner/pi-agent-core': 0.55.3(ws@8.19.0)(zod@4.3.6)
       '@mariozechner/pi-ai': 0.55.3(ws@8.19.0)(zod@4.3.6)
+      '@mariozechner/pi-tui': 0.55.3
+      '@silvia-odwyer/photon-node': 0.3.4
+      chalk: 5.6.2
+      cli-highlight: 2.1.11
+      diff: 8.0.3
+      extract-zip: 2.0.1
+      file-type: 21.3.0
+      glob: 13.0.6
+      hosted-git-info: 9.0.2
+      ignore: 7.0.5
+      marked: 15.0.12
+      minimatch: 10.2.4
+      proper-lockfile: 4.1.2
+      yaml: 2.8.2
+    optionalDependencies:
+      '@mariozechner/clipboard': 0.3.2
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - aws-crt
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+      - ws
+      - zod
+
+  '@mariozechner/pi-coding-agent@0.55.3(ws@8.19.0)(zod@4.6.6)':
+    dependencies:
+      '@mariozechner/jiti': 2.6.5
+      '@mariozechner/pi-agent-core': 0.55.3(ws@8.19.0)(zod@4.6.6)
+      '@mariozechner/pi-ai': 0.55.3(ws@8.19.0)(zod@4.6.6)
       '@mariozechner/pi-tui': 0.55.3
       '@silvia-odwyer/photon-node': 0.3.4
       chalk: 5.6.2
@@ -11905,6 +11984,11 @@ snapshots:
       ws: 8.19.0
       zod: 4.3.6
 
+  openai@6.10.0(ws@8.19.0)(zod@4.6.6):
+    optionalDependencies:
+      ws: 8.19.0
+      zod: 4.6.6
+
   openai@6.25.0(ws@8.19.0)(zod@4.6.7):
     optionalDependencies:
       ws: 8.19.0
@@ -13404,11 +13488,17 @@ snapshots:
     dependencies:
       zod: 4.3.6
 
+  zod-to-json-schema@3.25.1(zod@4.6.6):
+    dependencies:
+      zod: 4.6.6
+
   zod@3.25.75: {}
 
   zod@3.25.76: {}
 
   zod@4.3.6: {}
+
+  zod@4.6.6: {}
 
   zod@4.6.7: {}
 
